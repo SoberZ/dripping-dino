@@ -54,25 +54,21 @@ export default function HomePage() {
 		try {
 			if (isConnected === true) {
 				const web3Modal = await getWeb3Modal();
-				alert('const: web3Modal passed');
 				const connection = await web3Modal.connect();
-				alert('const: connection passed');
 				const provider = new ethers.providers.Web3Provider(connection);
-				alert('const: provider passed');
 				const signer = provider.getSigner();
-				alert('const: signer passed');
-
 				const { chainId } = await provider.getNetwork();
-				alert('const: chainid passed');
-
 				console.log('chain id: ' + chainId);
 				// const chainId = await ethereum.request({ method: 'eth_chainId' });
 				if (chainId === 1) {
 					const contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
 					alert('const: contract passed');
+					alert(contract);
+
 					let transaction = await contract.mint(mintAmount, {
 						value: ethers.utils.parseEther(String(NFT_PRICE * mintAmount)),
 					});
+
 					alert('const: transaction passed');
 					await transaction.wait();
 					alert('const: await passed');
@@ -85,6 +81,7 @@ export default function HomePage() {
 				openAlert('error', "Ethereum object doesn't exist");
 			}
 		} catch (error) {
+			console.log("im erroring");
 			openAlert(
 				'error',
 				error.message ? error.message : 'Transaction is failed.'
