@@ -26,7 +26,7 @@ export default function HomePage() {
 
 	const getWeb3Modal = async () => {
 		const web3Modal = new Web3Modal({
-			network: 'rinkeby',
+			network: 'mainnet',
 			cacheProvider: false,
 			providerOptions: {
 				walletconnect: {
@@ -55,17 +55,23 @@ export default function HomePage() {
 		try {
 			if (isConnected) {
 				const web3Modal = await getWeb3Modal();
+				// alert('const: web3modal passed');
 				const connection = await web3Modal.connect();
+				// alert('const: connection passed');
 				const provider = new ethers.providers.Web3Provider(connection);
+				// alert('const: provider passed');
 				const signer = provider.getSigner();
+				// alert('const: signer passed');
 				const { chainId } = await provider.getNetwork();
-				// console.log('chain id: ' + chainId);
+				console.log('chain id: ' + chainId);
 				// const chainId = await ethereum.request({ method: 'eth_chainId' });
-				if (chainId) {
+				if (chainId === 4) {
 					// const contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
 					const contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
+					console.log(contract.estimateGas)
 					alert('chain id:' + chainId + 'contract passed');
-					await contract.mint(mintAmount, {
+					console.log(NFT_PRICE * mintAmount)
+					let transaction = await contract.mint(mintAmount, {
 						value: ethers.utils.parseEther(String(NFT_PRICE * mintAmount)),
 					});
 					alert('const: transaction passed');
@@ -89,7 +95,7 @@ export default function HomePage() {
 	return (
 		<Box height='100vh'>
 			<MHidden width='mdDown'>
-				<DesktopHeroSection mint={mint} />
+				<DesktopHeroSection mint={async() => {mint()}} />
 			</MHidden>
 
 			<MHidden width='mdUp'>
@@ -119,3 +125,4 @@ export default function HomePage() {
 		</Box>
 	);
 }
+
