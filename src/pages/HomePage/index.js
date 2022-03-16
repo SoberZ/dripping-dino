@@ -64,7 +64,7 @@ export default function HomePage() {
 				if (chainId) {
 					// const contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
 					const contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
-					alert('const: contract passed');
+					alert('chain id:' + chainId + 'contract passed');
 					await contract.mint(mintAmount, {
 						value: ethers.utils.parseEther(String(NFT_PRICE * mintAmount)),
 					});
