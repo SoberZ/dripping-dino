@@ -31,9 +31,9 @@ export default function HomePage() {
 			providerOptions: {
 				walletconnect: {
 					package: WalletConnectProvider,
-					display: {
-						name: 'Mobile'
-					},
+					// display: {
+					// 	name: 'Mobile'
+					// },
 					options: {
 						// infuraId: '8cf3cad623da43f9a84ab5ac94230cf6'
 						// infuraId: '716d0574cc4c423a9adc0f4e451076ee',
@@ -56,30 +56,25 @@ export default function HomePage() {
 
 	const mint = async () => {
 		try {
-			console.log(isConnected ? "true!!" : "not..")
 			if (isConnected) {
 				const web3Modal = await getWeb3Modal();
 				const connection = await web3Modal.connect();
 				const provider = new ethers.providers.Web3Provider(connection);
 				const signer = provider.getSigner();
 				const { chainId } = await provider.getNetwork();
-				console.log('chain id: ' + chainId);
+				// console.log('chain id: ' + chainId);
 				// const chainId = await ethereum.request({ method: 'eth_chainId' });
 				if (chainId) {
 					// const contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
 					const contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
 					alert('const: contract passed');
-					alert(contract.address);
-
 					let transaction = await contract.mint(mintAmount, {
 						value: ethers.utils.parseEther(String(NFT_PRICE * mintAmount)),
 					});
-
 					alert('const: transaction passed');
 					await transaction.wait();
 					alert('const: await passed');
 					openAlert('success', 'Minted!');
-					alert('const: we should not get this far');
 				} else {
 					openAlert('warning', 'Please choose Ethereum mainnet.');
 				}
