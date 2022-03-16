@@ -65,7 +65,7 @@ export default function HomePage() {
 				const { chainId } = await provider.getNetwork();
 				console.log('chain id: ' + chainId);
 				// const chainId = await ethereum.request({ method: 'eth_chainId' });
-				if (chainId === 4) {
+				if (chainId === 4 | chainId === 1) {
 					// const contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
 					const contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
 					console.log(contract.estimateGas)
