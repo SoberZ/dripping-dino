@@ -26,14 +26,15 @@ export default function HomePage() {
 
 	const getWeb3Modal = async () => {
 		const web3Modal = new Web3Modal({
-			network: 'mainnet',
+			network: 'rinkeby',
 			cacheProvider: false,
 			providerOptions: {
 				walletconnect: {
 					package: WalletConnectProvider,
 					options: {
 						// infuraId: '8cf3cad623da43f9a84ab5ac94230cf6'
-						infuraId: '716d0574cc4c423a9adc0f4e451076ee',
+						// infuraId: '716d0574cc4c423a9adc0f4e451076ee',
+						alchemyId: 'GVGC37KtWrQlU1uWitp02fHQ1zUVlJp8'
 					},
 				},
 			},
@@ -52,22 +53,24 @@ export default function HomePage() {
 
 	const mint = async () => {
 		try {
-			if (isConnected === true) {
+			console.log(isConnected ? "true!!" : "not..")
+			if (isConnected) {
 				const web3Modal = await getWeb3Modal();
-				alert('const: web3Modal passed');
+				// alert('web3');
 				const connection = await web3Modal.connect();
-				alert('const: connection passed');
+				// alert('const: connection passed');
 				const provider = new ethers.providers.Web3Provider(connection);
-				alert('const: provider passed');
+				// alert('const: provider passed');
 				const signer = provider.getSigner();
-				alert('const: signer passed');
+				// alert('const: signer passed');
 
 				const { chainId } = await provider.getNetwork();
 				alert('const: chainid passed');
 
-				console.log('chain id: ' + chainId);
+				// console.log('chain id: ' + chainId);
 				// const chainId = await ethereum.request({ method: 'eth_chainId' });
-				if (chainId === 1) {
+				if (chainId) {
+					// const contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
 					const contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
 					alert('const: contract passed');
 					let transaction = await contract.mint(mintAmount, {
@@ -85,7 +88,6 @@ export default function HomePage() {
 				openAlert('error', "Ethereum object doesn't exist");
 			}
 		} catch (error) {
-			alert("Your error...");
 			openAlert(
 				'error',
 				error.message ? error.message : 'Transaction is failed.'
