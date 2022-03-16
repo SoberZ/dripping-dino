@@ -56,26 +56,22 @@ export default function HomePage() {
 			console.log(isConnected ? "true!!" : "not..")
 			if (isConnected) {
 				const web3Modal = await getWeb3Modal();
-				// alert('web3');
 				const connection = await web3Modal.connect();
-				// alert('const: connection passed');
 				const provider = new ethers.providers.Web3Provider(connection);
-				// alert('const: provider passed');
 				const signer = provider.getSigner();
-				// alert('const: signer passed');
-
 				const { chainId } = await provider.getNetwork();
-				alert('const: chainid passed');
-
-				// console.log('chain id: ' + chainId);
+				console.log('chain id: ' + chainId);
 				// const chainId = await ethereum.request({ method: 'eth_chainId' });
 				if (chainId) {
 					// const contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
 					const contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
 					alert('const: contract passed');
+					alert(contract.address);
+
 					let transaction = await contract.mint(mintAmount, {
 						value: ethers.utils.parseEther(String(NFT_PRICE * mintAmount)),
 					});
+
 					alert('const: transaction passed');
 					await transaction.wait();
 					alert('const: await passed');
