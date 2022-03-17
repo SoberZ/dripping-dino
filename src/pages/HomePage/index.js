@@ -33,8 +33,8 @@ export default function HomePage() {
 					package: WalletConnectProvider,
 					options: {
 						// infuraId: '8cf3cad623da43f9a84ab5ac94230cf6'
-						infuraId: '716d0574cc4c423a9adc0f4e451076ee',
-						// infuraId: 'e9b534f52ce94481b7fa65aa461839c3'
+						// infuraId: '716d0574cc4c423a9adc0f4e451076ee',
+						infuraId: 'e9b534f52ce94481b7fa65aa461839c3'
 					},
 				},
 			},
